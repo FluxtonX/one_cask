@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:one_cask/pallete.dart';
 import 'package:one_cask/presentation/screens/my_collection_screen.dart';
 
 class BaseScreen extends StatefulWidget {
@@ -14,11 +15,11 @@ class _BaseScreenState extends State<BaseScreen> {
 
   final PageController _controller = PageController(initialPage: 1);
 
-  final List<Widget> _screens = [
-    const ScanScreen(),
-    const MyCollectionScreen(),
-    const ShopScreen(),
-    const SettingsScreen(),
+  final List<Widget> _screens = const [
+    ScanScreen(),
+    MyCollectionScreen(),
+    ShopScreen(),
+    SettingsScreen(),
   ];
 
   @override
@@ -44,25 +45,33 @@ class _BaseScreenState extends State<BaseScreen> {
         onTap: (index) {
           _controller.jumpToPage(index);
         },
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
-        // backgroundColor: Colors.black,
+        selectedItemColor: const Color(0xFFD4AF37),
+        unselectedItemColor: Colors.white70,
+        backgroundColor: Pallete.backgroundColor,
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.qr_code_scanner),
+            icon: Icon(
+              Icons.qr_code_scanner,
+            ),
             label: 'Scan',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.cube_box),
+            icon: Icon(
+              CupertinoIcons.cube_box,
+            ),
             label: 'Collection',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.cart),
+            icon: Icon(
+              CupertinoIcons.cart,
+            ),
             label: 'Shop',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.settings),
+            icon: Icon(
+              CupertinoIcons.settings,
+            ),
             label: 'Settings',
           ),
         ],

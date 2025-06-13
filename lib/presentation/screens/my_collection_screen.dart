@@ -16,7 +16,7 @@ class MyCollectionScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: Pallete.backgroundColor,
         title: Text(
-          'My Collection',
+          'My collection',
           style: GoogleFonts.ebGaramond(
             fontSize: 24,
             fontWeight: FontWeight.w500,
@@ -25,10 +25,8 @@ class MyCollectionScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh, color: Pallete.whiteColor),
-            onPressed: () {
-              context.read<CollectionBloc>().add(CollectionFetched());
-            },
+            icon: const Icon(Icons.notifications, color: Colors.white),
+            onPressed: () {},
           ),
         ],
       ),
@@ -36,7 +34,7 @@ class MyCollectionScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is CollectionLoading) {
             return const Center(
-                child: CircularProgressIndicator(color: Color(0XFFD4AF37)));
+                child: CircularProgressIndicator(color: Color(0xFFD4AF37)));
           }
           if (state is CollectionFailure) {
             return Center(
@@ -87,46 +85,57 @@ class MyCollectionScreen extends StatelessWidget {
               itemCount: bottles.length,
               itemBuilder: (context, index) {
                 final bottle = bottles[index];
-
-                return InkWell(
+                return GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return BottleDetailScreen(bottle: bottle);
-                    }));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            BottleDetailScreen(bottle: bottle),
+                      ),
+                    );
                   },
-                  child: Card(
-                    color: const Color(0XFF122329),
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF122329),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          'assets/images/${bottle.image}',
-                          height: 100,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          bottle.name,
-                          style: GoogleFonts.ebGaramond(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
+                              'assets/images/${bottle.image}',
+                              fit: BoxFit.contain,
+                            ),
                           ),
-                          textAlign: TextAlign.center,
                         ),
-                        Text(
-                          '${bottle.year} #${bottle.cask} (${bottle.id})',
-                          style: GoogleFonts.lato(
-                            fontSize: 14,
-                            color: Colors.white70,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            bottle.name,
+                            style: GoogleFonts.ebGaramond(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
                         ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            '${bottle.year} #${bottle.cask} (${bottle.id})',
+                            style: GoogleFonts.lato(
+                              fontSize: 14,
+                              color: Colors.white70,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
                       ],
                     ),
                   ),

@@ -132,17 +132,22 @@ class BottleDetailScreen extends StatelessWidget {
                                   ListView(
                                     padding: EdgeInsets.zero,
                                     children: [
-                                      _buildDetailItem('Distillery', 'Text'),
-                                      _buildDetailItem('Region', 'Text'),
-                                      _buildDetailItem('Country', 'Text'),
-                                      _buildDetailItem('Type', 'Text'),
-                                      _buildDetailItem('Age statement', 'Text'),
-                                      _buildDetailItem('Filled', 'Text'),
-                                      _buildDetailItem('Bottled', 'Text'),
-                                      _buildDetailItem('Cask number', 'Text'),
-                                      _buildDetailItem('ABV', 'Text'),
-                                      _buildDetailItem('Size', 'Text'),
-                                      _buildDetailItem('Finish', 'Text'),
+                                      _buildDetailItem(
+                                          'Distillery', bottle.distillery),
+                                      _buildDetailItem('Region', bottle.region),
+                                      _buildDetailItem(
+                                          'Country', bottle.country),
+                                      _buildDetailItem('Type', bottle.type),
+                                      _buildDetailItem(
+                                          'Age statement', bottle.ageStatement),
+                                      _buildDetailItem('Filled', bottle.filled),
+                                      _buildDetailItem(
+                                          'Bottled', bottle.bottled),
+                                      _buildDetailItem(
+                                          'Cask number', bottle.caskNumber),
+                                      _buildDetailItem('ABV', bottle.abv),
+                                      _buildDetailItem('Size', bottle.size),
+                                      _buildDetailItem('Finish', bottle.finish),
                                     ],
                                   ),
                                   ListView(
@@ -170,30 +175,12 @@ class BottleDetailScreen extends StatelessWidget {
                                         textAlign: TextAlign.center,
                                       ),
                                       const SizedBox(height: 10),
-                                      _buildTastingItem('Nose', [
-                                        'Description',
-                                        'Description',
-                                        'Description',
-                                        // 'Description',
-                                        // 'Description',
-                                        // 'Description',
-                                        // 'Description',
-                                      ]),
-                                      _buildTastingItem('Palate', [
-                                        'Description',
-                                        'Description',
-                                        'Description',
-                                        // 'Description',
-                                        // 'Description',
-                                      ]),
-                                      _buildTastingItem('Finish', [
-                                        'Description',
-                                        'Description',
-                                        'Description',
-                                        // 'Description',
-                                        // 'Description',
-                                        // 'Description',
-                                      ]),
+                                      _buildTastingItem('Nose',
+                                          bottle.details.tastingNotes.nose),
+                                      _buildTastingItem('Palate',
+                                          bottle.details.tastingNotes.palate),
+                                      _buildTastingItem('Finish',
+                                          bottle.details.tastingNotes.finish),
                                       const SizedBox(height: 20),
                                       const Text(
                                         'Your notes',
@@ -203,42 +190,27 @@ class BottleDetailScreen extends StatelessWidget {
                                         ),
                                         textAlign: TextAlign.center,
                                       ),
-                                      _buildTastingItem('Nose', [
-                                        'Description 1',
-                                      ]),
-                                      _buildTastingItem('Palate', [
-                                        'Description',
-                                        'Description',
-                                      ]),
-                                      _buildTastingItem('Finish', [
-                                        'Description',
-                                        'Description',
-                                        'Description',
-                                      ]),
+                                      _buildTastingItem('Nose',
+                                          bottle.details.tastingNotes.yourNose),
+                                      _buildTastingItem(
+                                          'Palate',
+                                          bottle
+                                              .details.tastingNotes.yourPalate),
+                                      _buildTastingItem(
+                                          'Finish',
+                                          bottle
+                                              .details.tastingNotes.yourFinish),
                                     ],
                                   ),
                                   ListView(
                                     padding: EdgeInsets.zero,
-                                    children: [
-                                      _buildHistoryItem(
-                                          'Title', 'Description', [
-                                        'attachment1',
-                                        'attachment2',
-                                        'attachment3'
-                                      ]),
-                                      _buildHistoryItem(
-                                          'Title', 'Description', [
-                                        'attachment1',
-                                        'attachment2',
-                                        'attachment3'
-                                      ]),
-                                      _buildHistoryItem(
-                                          'Title', 'Description', [
-                                        'attachment1',
-                                        'attachment2',
-                                        'attachment3'
-                                      ]),
-                                    ],
+                                    children: bottle.history
+                                        .map((entry) => _buildHistoryItem(
+                                              entry.title,
+                                              entry.description,
+                                              entry.attachments,
+                                            ))
+                                        .toList(),
                                   ),
                                 ],
                               ),
@@ -247,18 +219,25 @@ class BottleDetailScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Pallete.yellowColor,
-                          foregroundColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Pallete.yellowColor,
+                              foregroundColor: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: const Text(
+                              '+ Add to my collection',
+                              style: TextStyle(fontSize: 16),
+                            ),
                           ),
-                        ),
-                        onPressed: () {},
-                        child: const Text(
-                          '+ Add to my collection',
-                          style: TextStyle(fontSize: 16),
                         ),
                       ),
                       const SizedBox(height: 40),
@@ -266,27 +245,6 @@ class BottleDetailScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.all(16.0),
-              //   child: SizedBox(
-              //     width: double.infinity,
-              //     height: 50,
-              //     child: ElevatedButton(
-              //       style: ElevatedButton.styleFrom(
-              //         backgroundColor: Pallete.yellowColor,
-              //         foregroundColor: Colors.black,
-              //         shape: RoundedRectangleBorder(
-              //           borderRadius: BorderRadius.circular(8),
-              //         ),
-              //       ),
-              //       onPressed: () {},
-              //       child: const Text(
-              //         '+ Add to my collection',
-              //         style: TextStyle(fontSize: 16),
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -322,7 +280,6 @@ class BottleDetailScreen extends StatelessWidget {
   Widget _buildTastingItem(String category, List<String> descriptions) {
     return Container(
       color: const Color(0xFF0E1C21),
-      // padding: const EdgeInsets.symmetric(vertical: 8.0),
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
@@ -409,7 +366,7 @@ class BottleDetailScreen extends StatelessWidget {
                                 child: Text(
                                   attachment,
                                   style: const TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black,
                                   ),
                                 ),
                               ),

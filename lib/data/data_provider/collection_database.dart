@@ -19,7 +19,8 @@ class CollectionDatabase {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    return await openDatabase(path,
+        version: 2, onCreate: _createDB, onUpgrade: _upgradeDB);
   }
 
   Future _createDB(Database db, int version) async {
@@ -30,9 +31,38 @@ class CollectionDatabase {
       year TEXT NOT NULL,
       cask TEXT NOT NULL,
       image TEXT NOT NULL,
-      details TEXT NOT NULL
+      details TEXT NOT NULL,
+      distillery TEXT,
+      region TEXT,
+      country TEXT,
+      type TEXT,
+      ageStatement TEXT,
+      filled TEXT,
+      bottled TEXT,
+      caskNumber TEXT,
+      abv TEXT,
+      size TEXT,
+      finish TEXT,
+      history TEXT
     )
     ''');
+  }
+
+  Future _upgradeDB(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await db.execute('ALTER TABLE bottles ADD COLUMN distillery TEXT');
+      await db.execute('ALTER TABLE bottles ADD COLUMN region TEXT');
+      await db.execute('ALTER TABLE bottles ADD COLUMN country TEXT');
+      await db.execute('ALTER TABLE bottles ADD COLUMN type TEXT');
+      await db.execute('ALTER TABLE bottles ADD COLUMN ageStatement TEXT');
+      await db.execute('ALTER TABLE bottles ADD COLUMN filled TEXT');
+      await db.execute('ALTER TABLE bottles ADD COLUMN bottled TEXT');
+      await db.execute('ALTER TABLE bottles ADD COLUMN caskNumber TEXT');
+      await db.execute('ALTER TABLE bottles ADD COLUMN abv TEXT');
+      await db.execute('ALTER TABLE bottles ADD COLUMN size TEXT');
+      await db.execute('ALTER TABLE bottles ADD COLUMN finish TEXT');
+      await db.execute('ALTER TABLE bottles ADD COLUMN history TEXT');
+    }
   }
 
   Future<void> insertBottle(Bottle bottle) async {
